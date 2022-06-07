@@ -1,11 +1,19 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, CSSProperties } from "react";
 import "antd/dist/antd.css";
 import { Checkbox, Input } from "antd";
 
+/*note: I do not want to use the standard && operator to toggle 
+  visiblity of the input box because it will reset future
+  prepopulates
+*/
+const hidden: CSSProperties = { visibility: "hidden" };
+const visible: CSSProperties = { visibility: "visible" };
+
 const Parts: FC = () => {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(hidden);
   const onChange = (e) => {
-    setIsShow(e.target.checked);
+    if (e.target.checked) setIsShow(visible);
+    else setIsShow(hidden);
   };
   return (
     <>
@@ -16,7 +24,7 @@ const Parts: FC = () => {
           Checkbox
         </Checkbox>
       </Checkbox.Group>
-      {isShow && <Input type="text" placeholder="The box is clicked" />}
+      <Input type="text" placeholder="The box is clicked" style={isShow} />
     </>
   );
 };
